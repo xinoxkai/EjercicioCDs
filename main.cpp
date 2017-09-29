@@ -46,12 +46,26 @@ void Push(PilaCDs *pila, CD x){
     pCD nuevo;
     
     nuevo=(pCD)malloc(sizeof(CD));
-    nuevo=x;
+    
+    nuevo->Interprete=x->Interprete;
+    nuevo->Titulo=x->Titulo;
+    nuevo->cantCanciones=x->cantCanciones;
+    nuevo->duracionSeg=x->duracionSeg
+    
     nuevo->nextCDPtr=*pila;
     *pila=nuevo;
 }
 
 CD Pop(PilaCDs *pila){
-    pCD cd;
+    pCD temp;
+    CD retorno;
     
+    temp=*pila;
+    if(!temp)return 0;
+    
+    *pila=temp->nextCDPtr;
+    
+    retorno=temp;
+    free(temp);
+    return retorno;
 }
