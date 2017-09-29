@@ -13,24 +13,22 @@
 
 #include <cstdlib>
 #include <conio.h>
-#include <iostream>
+#include <string>
 
-typedef struct CD{
-    char Titulo[];
-    char Interprete[];
+typedef struct nodoCD{
+    std::string Titulo;
+    std::string Interprete;
     int duracionSeg;
     int cantCanciones;
-    CD *nextCDPtr;
-};
+    struct nodoCD *nextCDPtr;
+}CD;
 
-typedef CD pCD;
+typedef CD *pCD;
 typedef CD *PilaCDs;
 
 void Push(PilaCDs *pila, CD x);
 CD Pop(PilaCDs *pila);
 
-using std::cout;
-using std::endl;
 
 /*
  * 
@@ -47,10 +45,12 @@ void Push(PilaCDs *pila, CD x){
     
     nuevo=(pCD)malloc(sizeof(CD));
     
-    nuevo->Interprete=x->Interprete;
-    nuevo->Titulo=x->Titulo;
-    nuevo->cantCanciones=x->cantCanciones;
-    nuevo->duracionSeg=x->duracionSeg
+    nuevo->Interprete=x.Interprete;
+    nuevo->Titulo=x.Titulo;
+    nuevo->cantCanciones=x.cantCanciones;
+    nuevo->duracionSeg=x.duracionSeg;
+    
+    //nuevo=&x;
     
     nuevo->nextCDPtr=*pila;
     *pila=nuevo;
@@ -61,11 +61,9 @@ CD Pop(PilaCDs *pila){
     CD retorno;
     
     temp=*pila;
-    if(!temp)return 0;
-    
+    retorno.Interprete=temp->Interprete;
     *pila=temp->nextCDPtr;
     
-    retorno=temp;
     free(temp);
     return retorno;
 }
